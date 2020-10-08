@@ -3,27 +3,22 @@
 module.exports = {
   development: {
     client: "sqlite3",
+    useNullAsDefault: true, // needed for sqlite
     connection: {
-      filename: "./dev.sqlite3",
+      filename: "./data/recipe_book.db3",
     },
   },
-
-  staging: {
-    client: "postgresql",
-    connection: {
-      database: "my_db",
-      user: "username",
-      password: "password",
+  pool: {
+    afterCreate: (conn, done) => {
+      // runs after a connection is made to the sqlite engine
+      conn.run("PRAGMA foreign_keys = ON", done); // turn on FK enforcement
     },
-    pool: {
-      afterCreate: (conn, done) => {
-        // runs after a connection is made to the sqlite engine
-        conn.run("PRAGMA foreign_keys = ON", done); // turn on FK enforcement
-      },
-    },
-    migrations: {
-      tableName: "knex_migrations",
-    },
+  },
+  migrations: {
+    directory: "./data/migrations",
+  },
+  seeds: {
+    directory: "./data/seeds",
   },
 
   production: {

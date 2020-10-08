@@ -1,17 +1,17 @@
 exports.up = function (knex) {
   return knex.schema
-    .createTable("recipe", (tbl) => {
+    .createTable("recipes", (tbl) => {
       tbl.increments();
       tbl.string("recipe_name").notNullable().unique();
     })
-    .createTable("ingredient", (tbl) => {
+    .createTable("ingredients", (tbl) => {
       tbl.increments();
       tbl.string("ingredient_name").notNullable().unique();
       tbl
         .integer("recipe_id")
         .unsigned()
         .references("id")
-        .inTable("recipe")
+        .inTable("recipes")
         .onDelete("RESTRICT")
         .onUpdate("CASCADE");
       tbl.integer("quantity");
@@ -19,6 +19,6 @@ exports.up = function (knex) {
 };
 exports.down = function (knex) {
   return knex.schema
-    .dropTableIfExists("recipe")
-    .dropTableIfExists("ingredient");
+    .dropTableIfExists("recipes")
+    .dropTableIfExists("ingredients");
 };

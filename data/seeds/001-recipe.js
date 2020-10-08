@@ -1,13 +1,13 @@
 exports.seed = function (knex) {
   const recipes = [
     {
-      name: "Twice Baked Potatoes",
+      recipe_name: "Twice Baked Potatoes",
     },
     {
-      name: "Beef Lasagna",
+      recipe_name: "Beef Lasagna",
     },
     {
-      name: "Chicken Parm",
+      recipe_name: "Chicken Parm",
     },
   ];
   return knex("recipes").insert(recipes);
